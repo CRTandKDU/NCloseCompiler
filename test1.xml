@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE ruleset SYSTEM "kbml.dtd">
+
+<!-- @version: -->
+
+<ruleset name="String-types tests">
+  <rule>
+    <hypothesis>InTheMiddle</hypothesis>
+    <condition>
+      <test op="in"><var>user</var>
+	<const>reese</const>
+	<const>malcolm</const>
+	<var>person</var>
+	<const>dewey</const>
+	<const>francis</const>
+      </test>
+      <test op="gt"><var>y</var><const>4.5</const></test>
+    </condition>
+    <action>
+      <command op="set-num">
+	<var>x</var>
+	<const>221.65</const>
+      </command>
+      <command op="set-bool">
+	<var>b1</var>
+	<const>true</const>
+      </command>
+      <command op="set-bool">
+	<var>b2</var>
+	<const>false</const>
+      </command>
+    </action>
+  </rule>
+  <rule>
+    <hypothesis>Diff</hypothesis>
+    <condition>
+      <test op="in"><var>user</var><const>joe</const></test>
+    </condition>
+  </rule>
+</ruleset>
