@@ -1,0 +1,17 @@
+NCloseCompiler: A LLVM-based NClose Compiler and several Runtimes
+
+About
+=====
+The NClose architecture is an original architecture for knowledge representation and inference processing.  This project explores a renewed implementation of this architecture on top of the Low Level Virtual Machine (LLVM) system.  The NCloseCompiler development is part of the Knowledge Base Virtual Machine (KBVM) project.
+
+Installation
+============
+See further details in the INSTALL file in this distribution.
+
+Development Status
+==================
+Not even beta!  This is experimental code for investigation purposes only.  Warning: There is very scant documentation and no representation whatsoever for quality or usability at this stage.
+
+License
+=======
+This is made available under GPL version 3.  See: http://www.gnu.org/licenses/gpl.html and the COPYING file in this distribution.
