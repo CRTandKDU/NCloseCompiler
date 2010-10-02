@@ -1,0 +1,2 @@
+.span.booltrue { text-align:left; font-style:normal; color:blue; }
+.span.boolboolfalse { text-align:left; font-style:normal; color:red; }

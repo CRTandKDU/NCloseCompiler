@@ -1,0 +1,323 @@
+<ruleset name="SATFAULT">
+  <!-- Sensor data capture rules -->
+  <rule>
+    <hypothesis>TANKS_OUT_PRESSURE_LOW</hypothesis>
+    <condition>
+      <test op="lt"><var>pressure_out_P3</var><const>20</const></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>TANKS_OUT_PRESSURE_LOW</hypothesis>
+    <condition>
+      <test op="lt"><var>pressure_out_P4</var><const>20</const></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>ALARM_TANK_WAS_HIGH</hypothesis>
+    <condition>
+      <test op="gt"><var>pressure_P1</var><const>370</const></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>ALARM_TANK_WAS_HIGH</hypothesis>
+    <condition>
+      <test op="gt"><var>pressure_P2</var><const>370</const></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>ALARM_TANK_WAS_HIGH</hypothesis>
+    <condition>
+      <test op="gt"><var>pressure_P3</var><const>370</const></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>ALARM_TANK_WAS_HIGH</hypothesis>
+    <condition>
+      <test op="gt"><var>pressure_P4</var><const>370</const></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>TANKS_EQUAL</hypothesis>
+    <condition>
+      <test op="eq"><var>pressure_P2</var><var>pressure_P4</var></test>
+    </condition>
+  </rule>
+  <rule>
+    <hypothesis>TANKS_EQUAL</hypothesis>
+    <condition>
+      <test op="eq"><var>pressure_P1</var><var>pressure_P3</var></test>
+    </condition>
+  </rule>
+  <rule>
+    <hypothesis>ALERT</hypothesis>
+    <condition>
+      <test op="lt"><var>pressure_P1</var><const>20</const></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>ALERT</hypothesis>
+    <condition>
+      <test op="lt"><var>pressure_P2</var><const>20</const></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>ALERT</hypothesis>
+    <condition>
+      <test op="gt"><var>pressure_P1</var><const>370</const></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>ALERT</hypothesis>
+    <condition>
+      <test op="gt"><var>pressure_P2</var><const>370</const></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>ALERT</hypothesis>
+    <condition>
+      <test op="lt"><var>pressure_out_P3</var><const>20</const></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>ALERT</hypothesis>
+    <condition>
+      <test op="lt"><var>pressure_out_P4</var><const>20</const></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>ALERT</hypothesis>
+    <condition>
+      <test op="gt"><var>pressure_out_P3</var><const>370</const></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>ALERT</hypothesis>
+    <condition>
+      <test op="gt"><var>pressure_out_P4</var><const>370</const></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>ALARM_TANK_WAS_P1_OR_P2</hypothesis>
+    <condition>
+      <test op="lt"><var>pressure_P1</var><const>20</const></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>ALARM_TANK_WAS_P1_OR_P2</hypothesis>
+    <condition>
+      <test op="lt"><var>pressure_P2</var><const>20</const></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>ALARM_TANK_WAS_P1_OR_P2</hypothesis>
+    <condition>
+      <test op="gt"><var>pressure_P1</var><const>370</const></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>ALARM_TANK_WAS_P1_OR_P2</hypothesis>
+    <condition>
+      <test op="gt"><var>pressure_P2</var><const>370</const></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>TANK_P1_OR_P2_WAS_HIGH</hypothesis>
+    <condition>
+      <test op="gt"><var>pressure_P1</var><const>370</const></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>TANK_P1_OR_P2_WAS_HIGH</hypothesis>
+    <condition>
+      <test op="gt"><var>pressure_P1</var><const>370</const></test>
+    </condition>
+  </rule>  
+  <!-- Immediate remedy actions rules -->
+  <rule>
+    <hypothesis>ACTION_12</hypothesis>
+    <condition>
+      <test op="in">
+	<var>CRT_and_KDU</var>
+	<const>AGREE</const>
+      </test>
+      <test op="notin">
+	<var>task</var>
+	<const>FLUID-TRANSFER</const>
+      </test>
+      <test op="yes"><var>ALARM_TANK_WAS_P1_OR_P2</var></test>
+      <test op="yes"><var>TANK_P1_OR_P2_WAS_HIGH</var></test>
+    </condition>
+    <action>
+      <command op="set-num"><var>pressure_P1</var><const>200</const></command>
+      <command op="set-num"><var>pressure_P2</var><const>205</const></command>
+      <command op="set-num"><var>pressure_P3</var><const>300</const></command>
+      <command op="set-num"><var>pressure_P4</var><const>200</const></command>
+      <command op="set-num"><var>pressure_out_P3</var><const>200</const></command>
+      <command op="set-num"><var>pressure_out_P4</var><const>205</const></command>
+      <command op="set-num"><var>pressure_P5</var><const>200</const></command>
+    </action>
+  </rule>
+  <rule>
+    <hypothesis>ACTION_14</hypothesis>
+    <condition>
+      <test op="in">
+	<var>CRT_and_KDU</var>
+	<const>AGREE</const>
+      </test>
+      <test op="notin">
+	<var>task</var>
+	<const>FLUID-TRANSFER</const>
+      </test>
+      <test op="yes"><var>ALARM_TANK_WAS_P1_OR_P2</var></test>
+      <test op="no"><var>TANK_P1_OR_P2_WAS_HIGH</var></test>
+    </condition>
+    <action>
+      <command op="set-num"><var>pressure_P1</var><const>200</const></command>
+      <command op="set-num"><var>pressure_P2</var><const>205</const></command>
+      <command op="set-num"><var>pressure_P3</var><const>300</const></command>
+      <command op="set-num"><var>pressure_P4</var><const>200</const></command>
+      <command op="set-num"><var>pressure_out_P3</var><const>200</const></command>
+      <command op="set-num"><var>pressure_out_P4</var><const>205</const></command>
+    </action>
+  </rule>
+  <rule>
+    <hypothesis>ACTION_19</hypothesis>
+    <condition>
+      <test op="in">
+	<var>CRT_and_KDU</var>
+	<const>AGREE</const>
+      </test>
+      <test op="notin">
+	<var>task</var>
+	<const>FLUID-TRANSFER</const>
+      </test>
+      <test op="yes"><var>ALARM_TANK_WAS_P1_OR_P2</var></test>
+      <test op="neq"><var>pressure_out_P3</var><var>pressure_out_P4</var></test>
+    </condition>
+    <action>
+      <command op="set-num"><var>pressure_out_P3</var><const>200</const></command>
+      <command op="set-num"><var>pressure_out_P4</var><const>200</const></command>
+    </action>
+  </rule>
+  <rule>
+    <hypothesis>ACTION_4</hypothesis>
+    <condition>
+      <test op="in"><var>CRT_and_KDU</var><const>AGREE</const></test>
+      <test op="in"><var>task</var><const>FLUID-TRANSFER</const></test>
+      <test op="yes"><var>ALERT</var></test>
+    </condition>
+    <action>
+      <command op="set-num"><var>pressure_P1</var><const>200</const></command>
+      <command op="set-num"><var>pressure_P2</var><const>205</const></command>
+      <command op="set-num"><var>pressure_P3</var><const>300</const></command>
+      <command op="set-num"><var>pressure_P4</var><const>200</const></command>
+      <command op="set-num"><var>pressure_out_P3</var><const>200</const></command>
+      <command op="set-num"><var>pressure_out_P4</var><const>205</const></command>
+    </action>
+  </rule>
+  <!-- Diagnosis rules -->
+  <rule>
+    <hypothesis>DECREASE_DUE_TO_THERMAL_CONDITIONS</hypothesis>
+    <condition>
+      <test op="in">
+	<var>CRT_and_KDU</var>
+	<const>AGREE</const>
+      </test>
+      <test op="notin">
+	<var>task</var>
+	<const>FLUID-TRANSFER</const>
+      </test>
+      <test op="no"><var>ALARM_TANK_WAS_P1_OR_P2</var></test>
+      <test op="eq"><var>pressure_out_P3</var><var>pressure_out_P4</var></test>
+    </condition>
+  </rule>  
+  <rule>
+    <hypothesis>EXC_P_RISE_V10</hypothesis>
+    <condition>
+      <test op="yes"><var>ACTION_12</var></test>
+      <test op="eq"><var>pressure_P2</var><var>pressure_P5</var></test>
+    </condition>
+  </rule>
+  <rule>
+    <hypothesis>EXC_P_RISE_V3</hypothesis>
+    <condition>
+      <test op="yes"><var>ACTION_12</var></test>
+      <test op="eq"><var>pressure_P1</var><var>pressure_P5</var></test>
+    </condition>
+  </rule>
+  <rule>
+    <hypothesis>EXC_P_RISE_V16</hypothesis>
+    <condition>
+      <test op="yes"><var>ACTION_4</var></test>
+      <test op="yes"><var>TANKS_EQUAL</var></test>
+      <test op="yes"><var>ALARM_TANK_WAS_HIGH</var></test>
+    </condition>
+  </rule>
+  <rule>
+    <hypothesis>THERMAL_TRANSIENT_CONDITION</hypothesis>
+    <condition>
+      <test op="yes"><var>ACTION_19</var></test>
+      <test op="no"><var>TANKS_OUT_PRESSURE_LOW</var></test>
+      <test op="eq"><var>pressure_out_P3</var><var>pressure_out_P4</var></test>
+    </condition>
+  </rule>
+  <rule>
+    <hypothesis>POSSIBLE_LEAK</hypothesis>
+    <condition>
+      <test op="yes"><var>ACTION_19</var></test>
+      <test op="yes"><var>TANKS_OUT_PRESSURE_LOW</var></test>
+      <test op="eq"><var>pressure_out_P3</var><var>pressure_out_P4</var></test>
+    </condition>
+  </rule>
+  <rule>
+    <hypothesis>POSSIBLE_LEAK</hypothesis>
+    <condition>
+      <test op="yes"><var>ACTION_14</var></test>
+      <test op="yes"><var>TANKS_EQUAL</var></test>
+    </condition>
+  </rule>
+  <rule>
+    <hypothesis>POSSIBLE_LEAK</hypothesis>
+    <condition>
+      <test op="yes"><var>ACTION_4</var></test>
+      <test op="yes"><var>TANKS_EQUAL</var></test>
+      <test op="no"><var>ALARM_TANK_WAS_HIGH</var></test>
+    </condition>
+  </rule>
+  <rule>
+    <hypothesis>MDM_ANALOG_INPUT_PARAMETER_LOSS</hypothesis>
+    <condition>
+      <test op="in"><var>CRT_and_KDU</var><const>DISAGREE</const></test>
+      <test op="yes"><var>ALERT</var></test>
+    </condition>
+  </rule>
+  <rule>
+    <hypothesis>XDRC_FAILURE_OR_BIAS</hypothesis>
+    <condition>
+      <test op="yes"><var>ACTION_14</var></test>
+      <test op="no"><var>TANKS_EQUAL</var></test>
+    </condition>
+  </rule>
+  <rule>
+    <hypothesis>XDRC_FAILURE_OR_BIAS</hypothesis>
+    <condition>
+      <test op="yes"><var>ACTION_4</var></test>
+      <test op="no"><var>TANKS_EQUAL</var></test>
+    </condition>
+  </rule>
+  <rule>
+    <hypothesis>XDRC_FAILURE_OR_BIAS</hypothesis>
+    <condition>
+      <test op="yes"><var>ACTION_19</var></test>
+      <test op="neq"><var>pressure_out_P3</var><var>pressure_out_P4</var></test>
+    </condition>
+  </rule>
+  <rule>
+    <hypothesis>XDRC_FAILURE_OR_BIAS</hypothesis>
+    <condition>
+      <test op="yes"><var>ACTION_12</var></test>
+      <test op="neq"><var>pressure_P2</var><var>pressure_P5</var></test>
+      <test op="neq"><var>pressure_P1</var><var>pressure_P5</var></test>
+    </condition>
+  </rule>
+</ruleset>

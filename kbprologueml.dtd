@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- @version:  2010.06.26 -->
+
+<!-- `ruleset' groups related rules -->
+<!ELEMENT prologue (suggest|volunteer)+>
+
+<!-- `suggest' posts an hypothesis -->
+<!ELEMENT suggest (#PCDATA)>
+
+<!-- `volunteers' assigns value to a sign -->
+<!ELEMENT volunteer (var,const)>
+<!ELEMENT var (#PCDATA)>
+<!ELEMENT const (#PCDATA)>
+
+

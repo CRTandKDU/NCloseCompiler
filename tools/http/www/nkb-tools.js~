@@ -1,0 +1,112 @@
+// The KBVM Compiler Infrastructure
+// A basic javascript front-end to NClose Services
+// @author jmc@neurondata.org
+
+redrawEncys = function(){
+  $.getJSON(
+      'http://127.0.0.1:8000/couchdb.sh?http://127.0.0.1:5984/knowcess/cc619f59b60377032c97271afa44d566',
+      function( data ){
+	  $('#agenda').empty();
+	  $('#hypos').empty();
+	  $('#signs').empty();
+	  $.each( data.agenda, 
+		  function(index,item){
+		      $('#agenda').append( item + '<br/>');
+		  });
+	  // Fill goals table
+	  sHTML = "<table width='100%' border='1'>";
+	  sHTML += "<tr><th>Goal</th><th>Status</th></tr>";
+	  $.each( data.hypotheses, 
+		  function(index,item){
+		      val = data.wm[item] == 1 ? "true" : "false";
+		      deco = data.wm[item] == 1 ? "booltrue" : "boolfalse";
+		      sHTML += "<tr>";
+		      sHTML += "<td><span class='" + deco + "'>" + 
+			  item +
+			  "</span></td>" +
+			  "<td><span class='" + deco + "'>" +
+			  val + 
+			  "</span></td>";
+		  });
+	  $('#hypos').append( sHTML );
+	  // Fill signs table
+	  sHTML = "<table width='100%' border='1'>";
+	  sHTML += "<tr><th>Sign</th><th>Value</th></tr>";
+	  $.each( data.signs, 
+		  function(index,item){
+		      deco = "valuedsign";
+		      sHTML += "<tr>";
+		      sHTML += "<td><span class='" + deco + "'>" + 
+			  item +
+			  "</span></td>" +
+			  "<td><span class='" + deco + "'>" +
+			  data.wm[item] + 
+			  "</span></td>";
+		  });
+	  $('#signs').append( sHTML );
+      }
+  );
+};
+
+nkbNext = function(){
+    $("#sign").empty();
+    $.getJSON(
+	"http://127.0.0.1:8000/nkbcouchhttp.sh?command=next",
+	function(data){
+	    $("#sign").text( data.question );
+	    $("#question").empty().append('What is the value of '+ data.question + '?' );
+	    $("#qBlock").show();
+	}
+    );
+};
+
+nkbAnswer = function(){
+    $("#qBlock").hide();
+    args = "sign=" + $("#sign").text() + "&value=" + $("#answer").val() + "&command=volunteer";
+    // console.log( args );
+    $("#answer").val("");
+    $.getJSON(
+	"http://127.0.0.1:8000/nkbcouchhttp.sh?" + args,
+	function(data){
+	    nkbNext();
+	    redrawEncys();
+	}
+    );    
+};
+
+nkbRestart = function(){
+    $("#sign").empty();
+    $("#qBlock").hide();
+    $.getJSON(
+	"http://127.0.0.1:8000/nkbcouchhttp.sh?command=restart",
+	function(data){
+	    // console.log(data);
+	}
+    );
+};
+
+$(document).ready(
+    function(){
+	// Hide question block and init globales
+	$("#qBlock").hide();
+	$("#sign").hide();
+	$("#answer").val("");
+	// Attach click functions
+	$("#butUpdate").click( redrawEncys );
+	$("#butNext").click(
+	    function(){
+		nkbNext();
+		redrawEncys();
+	    }
+	);
+	$("#butRestart").click( 
+	    function(){
+		nkbRestart();
+		redrawEncys();
+	    }
+	);
+	$("#butAnswer").click(
+	    nkbAnswer
+	);
+    }
+);

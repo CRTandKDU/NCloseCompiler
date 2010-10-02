@@ -1,0 +1,5 @@
+th { text-align:center; background-color:gray; font-style:bold; color:white }
+span.booltrue { text-align:left; font-size:12px; font-style:normal; color:blue; }
+span.boolfalse { text-align:left; font-size:12px; font-style:normal; color:red; }
+span.valuedsign { text-align:left; font-size:12px; font-style:normal; color:black; }
+
